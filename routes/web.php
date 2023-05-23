@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     //ne peuvent ajouter au panier que les utilisateur connecté
     Route::get('/add/{product}', [CartController::class, 'add'])->name('addToCart');
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/delete/{id}', [CartController::class, 'delete'])->name('delete');
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 });
 
 require __DIR__.'/auth.php';

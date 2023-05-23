@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index($categorie = 0) {
 
         //lister tout les produits
-        $products = Produit::orderBy('created_at' , 'desc')->paginate(10) ;
+        $products = Produit::orderBy('created_at' , 'desc')->paginate(8) ;
 
         if ($categorie != 0 ) {
         $products = Produit::where('categorie_id' , $categorie)->orderBy('created_at' , 'desc' )->paginate(10) ;
@@ -29,11 +29,14 @@ class ProductController extends Controller
     //afficher le detail du produits mais aussi les produits similaires
     public function detail(Produit $product) {
         
-       // dd($product->category_id) ;
-        //selectionner les produits qui ont la meme categorie que ce produit
-        $products = Produit::where('categorie_id' , $product->categorie_id)->orderBy('created_at' , 'desc' )->inRandomOrder()->limit(4)->get() ;
 
-    return view ('detail' , compact ('product' , 'products')) ;
+    // dd($product->category_id) ;
+    //selectionner les produits qui ont la même categorie que ce produit
+
+        $products = Produit::where('categorie_id' , $product->categorie_id)->orderBy('created_at' , 'desc' )->inRandomOrder()->limit(4)->get() ;
+        $categories = Categorie::orderBy('name' , 'asc')->get() ;
+
+    return view ('detail' , compact ('product' , 'products' , 'categories')) ;
 
     }
 
